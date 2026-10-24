@@ -1,0 +1,506 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BookNest - Online Book Store</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #fff8ef;
+      color: #30251f;
+    }
+
+    header {
+      background: #713d2b;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    header h1 {
+      margin: 0 0 15px;
+      font-size: 32px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 45px 15px;
+      background: #f1dfcc;
+    }
+
+    .hero h2 {
+      font-size: 34px;
+      margin-top: 0;
+    }
+
+    .hero p {
+      line-height: 1.6;
+    }
+
+    .primary-button,
+    .add-button {
+      background: #713d2b;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 11px 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.88;
+    }
+
+    .store {
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px 18px;
+    }
+
+    .store h2,
+    .cart-section h2 {
+      text-align: center;
+    }
+
+    .search-area {
+      max-width: 650px;
+      margin: 22px auto;
+    }
+
+    .search-area label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #cbb8a7;
+      border-radius: 8px;
+      font-size: 16px;
+      outline-color: #713d2b;
+    }
+
+    .category-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0 28px;
+    }
+
+    .category-button {
+      background: white;
+      color: #713d2b;
+      border: 1px solid #713d2b;
+      border-radius: 20px;
+      padding: 10px 18px;
+      cursor: pointer;
+    }
+
+    .category-button.active {
+      background: #713d2b;
+      color: white;
+    }
+
+    #resultCount {
+      text-align: center;
+      color: #665448;
+    }
+
+    .books {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit, minmax(210px, 1fr)
+      );
+      gap: 20px;
+    }
+
+    .book {
+      background: white;
+      padding: 22px 16px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 3px 12px #00000012;
+    }
+
+    .cover {
+      font-size: 65px;
+      margin: 8px 0;
+    }
+
+    .book h3 {
+      margin-bottom: 8px;
+    }
+
+    .book p {
+      line-height: 1.5;
+    }
+
+    .category-label {
+      display: inline-block;
+      background: #f1dfcc;
+      color: #713d2b;
+      padding: 5px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+
+    .price {
+      color: #713d2b;
+      font-size: 19px;
+      font-weight: bold;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 30px 10px;
+      color: #713d2b;
+    }
+
+    .cart-section {
+      background: #f1dfcc;
+      padding: 25px 15px;
+      text-align: center;
+    }
+
+    #cartItems {
+      padding: 0;
+      list-style: none;
+      line-height: 2;
+    }
+
+    .cart-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .secondary-button {
+      background: white;
+      color: #713d2b;
+      border: 1px solid #713d2b;
+      border-radius: 6px;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .contact {
+      padding: 25px 15px;
+      text-align: center;
+    }
+
+    footer {
+      background: #30251f;
+      color: white;
+      padding: 18px;
+      text-align: center;
+    }
+
+    @media (max-width: 500px) {
+      .hero h2 {
+        font-size: 27px;
+      }
+
+      header h1 {
+        font-size: 27px;
+      }
+
+      .books {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>📚 BookNest</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#books">Books</a>
+      <a href="#cartSection">My Cart</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <h2>Find Your Next Favourite Book!</h2>
+    <p>Discover amazing novels and story books.</p>
+    <a href="#books">
+      <button class="primary-button">Explore Books</button>
+    </a>
+  </section>
+
+  <main class="store" id="books">
+    <h2>Explore Our Books</h2>
+
+    <div class="search-area">
+      <label for="searchInput">Search for a book</label>
+      <input
+        type="search"
+        id="searchInput"
+        placeholder="Type a book name..."
+        autocomplete="off"
+      >
+    </div>
+
+    <div class="category-buttons">
+      <button class="category-button active"
+              data-category="All">
+        All Books
+      </button>
+
+      <button class="category-button"
+              data-category="Novels">
+        Novels
+      </button>
+
+      <button class="category-button"
+              data-category="Story Books">
+        Story Books
+      </button>
+    </div>
+
+    <p id="resultCount" aria-live="polite"></p>
+
+    <div class="books" id="bookList">
+
+      <article class="book"
+               data-name="The Mystery House"
+               data-category="Novels">
+        <div class="cover">📕</div>
+        <span class="category-label">Novel</span>
+        <h3>The Mystery House</h3>
+        <p>A thrilling mystery adventure.</p>
+        <p class="price">₹199</p>
+        <button class="add-button"
+                onclick="addToCart('The Mystery House', 199)">
+          Add to Cart
+        </button>
+      </article>
+
+      <article class="book"
+               data-name="Love and Life"
+               data-category="Novels">
+        <div class="cover">📗</div>
+        <span class="category-label">Novel</span>
+        <h3>Love and Life</h3>
+        <p>A fictional story about life.</p>
+        <p class="price">₹149</p>
+        <button class="add-button"
+                onclick="addToCart('Love and Life', 149)">
+          Add to Cart
+        </button>
+      </article>
+
+      <article class="book"
+               data-name="The Lost Kingdom"
+               data-category="Novels">
+        <div class="cover">📘</div>
+        <span class="category-label">Novel</span>
+        <h3>The Lost Kingdom</h3>
+        <p>An adventure in a forgotten kingdom.</p>
+        <p class="price">₹249</p>
+        <button class="add-button"
+                onclick="addToCart('The Lost Kingdom', 249)">
+          Add to Cart
+        </button>
+      </article>
+
+      <article class="book"
+               data-name="The Clever Rabbit"
+               data-category="Story Books">
+        <div class="cover">🐰</div>
+        <span class="category-label">Story Book</span>
+        <h3>The Clever Rabbit</h3>
+        <p>A fun story with a clever rabbit.</p>
+        <p class="price">₹99</p>
+        <button class="add-button"
+                onclick="addToCart('The Clever Rabbit', 99)">
+          Add to Cart
+        </button>
+      </article>
+
+      <article class="book"
+               data-name="Magic Forest"
+               data-category="Story Books">
+        <div class="cover">🌳</div>
+        <span class="category-label">Story Book</span>
+        <h3>Magic Forest</h3>
+        <p>Explore a magical forest.</p>
+        <p class="price">₹129</p>
+        <button class="add-button"
+                onclick="addToCart('Magic Forest', 129)">
+          Add to Cart
+        </button>
+      </article>
+
+      <article class="book"
+               data-name="The Brave Little Bird"
+               data-category="Story Books">
+        <div class="cover">🐦</div>
+        <span class="category-label">Story Book</span>
+        <h3>The Brave Little Bird</h3>
+        <p>A little bird learns to be brave.</p>
+        <p class="price">₹119</p>
+        <button class="add-button"
+                onclick="addToCart('The Brave Little Bird', 119)">
+          Add to Cart
+        </button>
+      </article>
+
+    </div>
+
+    <p id="noResults" class="no-results" hidden>
+      No books found. Try another name or category.
+    </p>
+  </main>
+
+  <section class="cart-section" id="cartSection">
+    <h2>🛒 My Shopping Cart</h2>
+    <p id="cartMessage">Your cart is empty.</p>
+    <ul id="cartItems"></ul>
+    <h3 id="cartTotal">Total: ₹0</h3>
+
+    <div class="cart-actions">
+      <button class="secondary-button" onclick="clearCart()">
+        Clear Cart
+      </button>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2>Contact BookNest</h2>
+    <p>Email: booknest@example.com</p>
+    <p>Demo website — replace this with your real contact details.</p>
+  </section>
+
+  <footer>
+    <p>© 2026 BookNest | Online Book Store Demo</p>
+  </footer>
+
+  <script>
+    let selectedCategory = "All";
+    let cart = [];
+
+    const searchInput = document.getElementById("searchInput");
+    const bookCards = document.querySelectorAll(".book");
+    const categoryButtons =
+      document.querySelectorAll(".category-button");
+
+    function filterBooks() {
+      const searchText = searchInput.value
+        .trim()
+        .toLowerCase();
+
+      let visibleCount = 0;
+
+      bookCards.forEach(function(book) {
+        const name = book.dataset.name.toLowerCase();
+        const category = book.dataset.category;
+
+        const matchesName = name.includes(searchText);
+        const matchesCategory =
+          selectedCategory === "All" ||
+          category === selectedCategory;
+
+        const showBook = matchesName && matchesCategory;
+
+        book.hidden = !showBook;
+
+        if (showBook) {
+          visibleCount++;
+        }
+      });
+
+      document.getElementById("resultCount").textContent =
+        visibleCount + (visibleCount === 1
+          ? " book found"
+          : " books found");
+
+      document.getElementById("noResults").hidden =
+        visibleCount !== 0;
+    }
+
+    searchInput.addEventListener("input", filterBooks);
+
+    categoryButtons.forEach(function(button) {
+      button.addEventListener("click", function() {
+        selectedCategory = button.dataset.category;
+
+        categoryButtons.forEach(function(item) {
+          item.classList.remove("active");
+        });
+
+        button.classList.add("active");
+        filterBooks();
+      });
+    });
+
+    function addToCart(name, price) {
+      cart.push({ name: name, price: price });
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById("cartItems");
+      cartItems.replaceChildren();
+
+      let total = 0;
+
+      cart.forEach(function(item) {
+        total += item.price;
+
+        const li = document.createElement("li");
+        li.textContent = item.name + " — ₹" + item.price;
+        cartItems.appendChild(li);
+      });
+
+      document.getElementById("cartMessage").textContent =
+        cart.length === 0
+          ? "Your cart is empty."
+          : "Books added: " + cart.length;
+
+      document.getElementById("cartTotal").textContent =
+        "Total: ₹" + total;
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCart();
+    }
+
+    filterBooks();
+  </script>
+
+</body>
+</html>
